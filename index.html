@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面试准备工作台 · 通用题库 + 个人素材库</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#fff; --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb;
+    --accent:#2563eb; --accent-soft:#eff6ff; --ok:#059669; --ok-soft:#ecfdf5;
+    --warn:#b45309; --warn-soft:#fffbeb; --tag:#eef2ff; --tag-ink:#4338ca; --pink:#db2777; --pink-soft:#fdf2f8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.7}
+  header{background:#fff;border-bottom:1px solid var(--line);padding:14px 24px 0;position:sticky;top:0;z-index:60}
+  .brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .brand h1{font-size:18px}
+  .brand .ver{color:var(--muted);font-size:12px}
+  .who{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12.5px}
+  .nav{display:flex;gap:2px;margin-top:10px;overflow-x:auto;align-items:center}
+  .nav .grp{font-size:11px;color:#9ca3af;padding:0 6px;white-space:nowrap;border-left:1px solid var(--line);margin-left:4px}
+  .nav .grp:first-child{border:none;margin:0}
+  .tab{padding:9px 13px;cursor:pointer;border:none;background:none;font-size:13.5px;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+  .tab.lock::after{content:"🔒";font-size:10px;margin-left:4px}
+  main{max-width:1120px;margin:0 auto;padding:22px 18px 90px}
+  section.page{display:none}
+  section.page.active{display:block}
+  h2{font-size:16.5px;margin:22px 0 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h2:first-child{margin-top:0}
+  h3{font-size:14.5px;margin:14px 0 6px}
+  p{margin:5px 0}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:11px 0}
+  .card.hl{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+  .muted{color:var(--muted)}.small{font-size:12.5px}
+  .chip{display:inline-block;background:var(--tag);color:var(--tag-ink);border-radius:999px;padding:2px 10px;font-size:12px;margin:2px 4px 2px 0;cursor:pointer}
+  .chip.src{background:#f3f4f6;color:var(--muted);cursor:default}
+  .chip.ok{background:var(--ok-soft);color:var(--ok)}
+  .chip.warn{background:var(--warn-soft);color:var(--warn)}
+  .chip.pub{background:var(--ok-soft);color:var(--ok);cursor:default}
+  .chip.priv{background:var(--pink-soft);color:var(--pink);cursor:default}
+  .star{display:grid;grid-template-columns:52px 1fr;gap:5px 10px;margin:7px 0}
+  .star b{color:var(--accent);font-size:12px;padding-top:2px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}}
+  .en{color:#475569}
+  .en-tag{display:inline-block;background:#0f172a;color:#fff;font-size:10.5px;border-radius:4px;padding:1px 6px;margin-right:6px;vertical-align:middle}
+  blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:7px 12px;border-radius:0 8px 8px 0;margin:7px 0;font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:7px 0}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#f9fafb;font-weight:600}
+  .filters{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0}
+  .fbtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 11px;font-size:12.5px;cursor:pointer;font-family:inherit}
+  .fbtn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .subnav{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+  .sbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 11px;font-size:12.5px;cursor:pointer;font-family:inherit}
+  .sbtn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+  .sub{display:none}.sub.on{display:block}
+  input[type=text],input[type=tel],input[type=email],select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;font-family:inherit;background:#fff}
+  textarea{min-height:70px;resize:vertical}
+  textarea.code{font-family:Consolas,monospace;font-size:12px;min-height:150px}
+  label{font-size:12.5px;color:var(--muted);display:block;margin:8px 0 3px}
+  button.btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13.5px;cursor:pointer;margin-top:9px;font-family:inherit}
+  button.btn.ghost{background:#fff;color:var(--accent);border:1px solid var(--accent)}
+  button.btn.sm{padding:4px 10px;font-size:12.5px;margin:0 6px 0 0}
+  button.btn.del{background:#fff;color:#dc2626;border:1px solid #fecaca}
+  .kpi{display:flex;flex-wrap:wrap;gap:7px;margin:5px 0}
+  .kpi span{background:var(--ok-soft);color:var(--ok);border-radius:6px;padding:2px 8px;font-size:12.5px;font-weight:600}
+  .todo{background:var(--warn-soft);border:1px solid #fde68a;border-radius:10px;padding:11px 13px;margin:9px 0;font-size:13px}
+  .story-link{color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .record{border-left:4px solid var(--accent);background:#fafafa;padding:9px 12px;border-radius:0 8px 8px 0;margin:7px 0;font-size:13px}
+  .record.rev{border-left-color:var(--pink)}
+  .qitem{border-bottom:1px dashed var(--line);padding:9px 0}
+  .qitem:last-child{border-bottom:none}
+  .qitem .q{font-weight:600}
+  .qitem .k{color:#374151;font-size:13px;margin-top:3px}
+  .qitem .k b{color:var(--ok)}
+  .gate{max-width:440px;margin:40px auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+  .gate h3{margin-top:0}
+  .mask{position:fixed;inset:0;background:rgba(17,24,39,.55);display:none;align-items:center;justify-content:center;z-index:200;padding:16px}
+  .mask.on{display:flex}
+  .modal{background:#fff;border-radius:14px;padding:22px;width:100%;max-width:420px}
+  .msg{font-size:12.5px;margin-top:8px}
+  .msg.err{color:#dc2626}.msg.ok{color:var(--ok)}
+  .codebox{display:flex;gap:8px}
+  .status{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok)}
+  .status.off{background:#f3f4f6;color:var(--muted)}
+  @media print{header{position:static}.tab,.subnav,.filters,button{display:none}section.page{display:block!important;page-break-after:always}}
+
+/* ---- 题库引擎 v3 ---- */
+.qcard{border:1px solid #e2e8f0;border-radius:10px;margin:8px 0;background:#fff}
+.qcard summary{cursor:pointer;padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;list-style:none}
+.qcard summary::-webkit-details-marker{display:none}
+.qcard[open] summary{border-bottom:1px dashed #e2e8f0;padding-bottom:8px}
+.qno{font:600 11px/1 ui-monospace,monospace;color:#475569;background:#f1f5f9;border-radius:6px;padding:4px 6px;flex:none}
+.qq{font-weight:600;flex:1;min-width:200px}
+.dur{font:600 11px/1 sans-serif;border-radius:999px;padding:4px 8px;flex:none;white-space:nowrap}
+.dg{background:#dcfce7;color:#15803d}
+.db{background:#dbeafe;color:#1d4ed8}
+.do{background:#ffedd5;color:#c2410c}
+.mlink{font-size:12px;color:#7c3aed;background:#f5f3ff;border-radius:8px;padding:3px 8px;cursor:pointer;flex:none}
+.mlink:hover{background:#ede9fe}
+.subh{margin:18px 0 6px;font-size:15px;border-left:4px solid #6366f1;padding-left:8px}
+table.scr{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px}
+table.scr th{background:#f8fafc;text-align:left;padding:6px 8px;border:1px solid #e2e8f0;font-size:12px;color:#475569}
+table.scr td{padding:6px 8px;border:1px solid #e2e8f0;vertical-align:top}
+tr.seg.on td{background:#fef9c3}
+tr.segtip td{background:#f8fafc;color:#64748b;font-size:12px}
+.st{white-space:nowrap;font:600 11px ui-monospace,monospace;color:#6366f1}
+.sk{font-weight:600;white-space:nowrap}
+.fulist{margin:4px 0 8px;padding-left:18px}
+.prac{display:flex;gap:10px;align-items:center;margin:0 12px 12px;padding-top:8px;border-top:1px dashed #e2e8f0;flex-wrap:wrap}
+.pclock{font:700 14px ui-monospace,monospace;color:#16a34a}
+
+/* ---------- 题库页头 ---------- */
+.bankhead{
+  position:sticky; top:62px; z-index:40; background:rgba(255,255,255,.9);
+  backdrop-filter:saturate(180%) blur(12px); -webkit-backdrop-filter:saturate(180%) blur(12px);
+  border:1px solid var(--line); border-radius:16px; padding:14px 16px 12px; margin-bottom:12px;
+  box-shadow:0 6px 24px -18px rgba(15,23,42,.5);
+}
+.bh-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.bh-top h2{margin:0;font-size:16.5px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.searchwrap{position:relative;flex:1;min-width:240px}
+.searchwrap .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;opacity:.6}
+.searchwrap input{padding-left:34px}
+.toolbar select{width:auto;min-width:132px}
+.legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:9px;font-size:11.5px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend .dot{width:8px;height:8px;border-radius:99px;display:inline-block}
+.legend .dot.dg{background:#34d399}.legend .dot.db{background:#60a5fa}.legend .dot.do{background:#fb923c}
+.legend .lg-tip{color:var(--faint);border-left:1px solid var(--line);padding-left:12px}
+@media(max-width:760px){.bankhead{position:static}.legend .lg-tip{display:none}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>🎯 面试准备工作台</h1>
+    <span class="ver">v7.0 · 438 题 · 56 张素材卡 · 9 个岗位方向 · AI 时代面试专区</span>
+    <div class="who" id="who"></div>
+  </div>
+  <nav class="nav" id="nav">
+    <span class="grp">公开</span>
+    <button class="tab active" data-p="overview">📌 总览</button>
+    <button class="tab" data-p="bank">📚 题库总库</button>
+    <button class="tab" data-p="method">🔮 押题方法</button>
+    <button class="tab" data-p="checklist">✅ 面试清单</button>
+    <button class="tab" data-p="aimethod">🤖 AI 面试应对</button>
+    <span class="grp">个人</span>
+    <button class="tab lock" data-p="stories">🧩 我的素材卡</button>
+    <button class="tab lock" data-p="directions">🧭 岗位方向</button>
+    <button class="tab lock" data-p="intros">🎤 自我介绍</button>
+    <button class="tab lock" data-p="predict">🎯 AI 押题</button>
+    <button class="tab lock" data-p="review">🗓 面试复盘</button>
+  </nav>
+</header>
+<main>
+
+<section class="page active" id="overview">
+  <div class="hero">
+    <h2>面试准备工作台</h2>
+    <p>把 6 段实习、1 篇论文、1 套 AI 能力拆成可复用的素材；再用 AI 按目标岗位押题，生成一开口就能说的答题脚本。</p>
+    <div class="chips"><span>438 题逐题讲稿（含 AI 时代面试 32 题）</span><span>56 张素材卡（含 AI 能力 6 卡）</span><span>9 个岗位方向</span><span>每张卡都能按你的话改</span><span>AI 押题 · 5 分钟长稿</span><span>面试复盘 · AI 分析</span></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>438</b><span>题库总量（14 大类）</span></div>
+    <div class="stat"><b>56</b><span>个人素材卡（含 6 张 AI 能力卡）</span></div>
+    <div class="stat"><b>9</b><span>岗位方向深度讲法</span></div>
+    <div class="stat"><b>AI</b><span>押题 + 复盘分析 · 全区可修改</span></div>
+  </div>
+
+  <div class="card">
+    <h2>两个区，两种权限</h2>
+    <table>
+      <tr><th style="width:120px">区域</th><th>内容</th><th style="width:130px">谁能看到</th></tr>
+      <tr><td><span class="chip pub">公开区</span></td><td>题库总库 438 题 · 14 大类（自我介绍 / 宝洁八大问 / 行为面 / HR 深挖 / 情景压力 / 群面 / <b>Case 面与商业实战</b> / <b>数据岗硬技能（SQL·统计·指标体系）</b> / <b>AI 时代面试（工具·认知·落地·产品·伦理·发展）</b> / 6 大行业专项 / 3 大专业方向 / <b>简历深挖链</b> / 分轮次 / 英文）——逐题含建议时长 + 分段讲稿 + 追问应对 + 常见坑 + 变体问法 + 评分锚点 + 计时练习</td><td>拿到链接的任何人</td></tr>
+      <tr><td><span class="chip priv">个人区</span></td><td>你的 STAR 素材卡、岗位方向讲法、自我介绍稿、押题记录、面试复盘（可 AI 分析）</td><td>只有你登录后可见（云端私有表，他人访问返回空）</td></tr>
+    </table>
+    <p class="small muted">数据存在云端数据库：素材卡与记录跟随账号，手机 / 电脑 / 平板登录后看到的是同一份，不再依赖单台设备的浏览器缓存。</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>首次使用三步</h3>
+      <ol>
+        <li>点右上角「登录」——手机号验证码或邮箱验证码，无需密码；</li>
+        <li>登录后自动灌入你的素材模板（56 张素材卡 + 9 个岗位方向 + 自我介绍），云端自动同步；</li>
+        <li>在「AI 面试应对」页过一遍四种 AI 面试形式的打法；题库「AI 时代面试」类 32 题优先练。</li>
+      </ol>
+      <p class="small muted">换设备只需要重新登一次，内容自动同步。</p>
+    </div>
+    <div class="card">
+      <h3>每次面试的四步流程</h3>
+      <ol>
+        <li>读 JD → 判断属于哪类岗位（商分 / 运营 / AI 产品 / PMO / 金融 / 供应链）</li>
+        <li>在「题库总库 → 行业专项 / 专业题库」里锁定对应题库，做押题清单</li>
+        <li>在「我的素材卡」挑 4–6 张，按岗位方向重排顺序</li>
+        <li>面试后 24 小时内填「面试复盘」，把被问倒的题变成下一场的素材</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>诚实原则（重要）</h2>
+    <blockquote>所有数字都来自你的简历与一手工作文件，每张素材卡标注了来源文件。口述前自己再校准一遍口径——面试官追问「怎么算出来的」时必须答得上。通用题库里的答案是<b>框架和要点</b>，不是逐字稿；照读会显得假。</blockquote>
+  </div>
+</section>
+
+<section class="page" id="bank">
+  <div class="bankhead">
+    <div class="bh-top">
+      <h2>📚 题库总库</h2>
+      <span class="small muted" id="qbCount"></span>
+    </div>
+    <div class="toolbar">
+      <div class="searchwrap">
+        <span class="ico">🔍</span>
+        <input id="qSearch" placeholder="搜题目 / 英文 / 编号 / 素材卡号（如 S1、某校园O2O平台、指标）">
+      </div>
+      <select id="durFilter">
+        <option value="all">全部时长</option>
+        <option value="s">短答 ≤45s</option>
+        <option value="m">标准 60–75s</option>
+        <option value="l">长答 ≥90s</option>
+      </select>
+    </div>
+    <div class="legend">
+      <span><i class="dot dg"></i>≤45s 快节奏</span>
+      <span><i class="dot db"></i>60–75s 标准</span>
+      <span><i class="dot do"></i>≥90s 深挖题</span>
+      <span class="lg-tip">点开任意题目 → 分段秒表讲稿 + 追问应对 + 常见坑；登录后每题底部可让 AI 按你的素材生成「我的版本」；点「计时练习」讲稿会随时间自动高亮</span>
+    </div>
+  </div>
+  <div class="subnav" id="qcatnav"></div>
+  <div class="subnav" id="qsub2" style="display:none"></div>
+  <div id="qarea"></div>
+  <div class="sub" id="sub-round" style="display:none">
+    <blockquote>不同轮次考的东西完全不同，别用一套答案打天下。以下按常见校招流程排列，每轮给出考察点、陷阱与准备动作。</blockquote>
+    <div id="rounds"></div>
+  </div>
+  <div class="sub" id="sub-eng" style="display:none">
+    <blockquote>英文面不要背逐字稿，背<b>句型骨架 + 数字</b>。每题下方给的是回答结构与可替换句式。题库总库里每张卡也都有 EN 版题目与英文骨架。</blockquote>
+    <div id="eng15"></div>
+    <div class="card">
+      <h3>万能句型（背这 12 句就够用）</h3>
+      <ul class="en small">
+        <li>"Let me walk you through it briefly." — 需要思考时争取 2 秒</li>
+        <li>"The situation was …, and my task was to …" — 起 STAR</li>
+        <li>"I broke it down into three steps." — 展示结构化</li>
+        <li>"To be concrete, the number was …" — 引出数字</li>
+        <li>"What I'd do differently is …" — 展示反思（加分句）</li>
+        <li>"That's a great question — can I clarify one thing first?" — 争取时间且显得专业</li>
+        <li>"From a data perspective, … / From an execution perspective, …" — 分视角</li>
+        <li>"I'm not fully sure, but my best guess is …" — 不会时诚实且有假设</li>
+        <li>"My understanding is …, is that right?" — 确认理解</li>
+        <li>"Could you tell me more about the team's biggest challenge?" — 反问</li>
+        <li>"I'd love to know how success is measured in this role." — 反问</li>
+        <li>"Thanks — that gives me a much clearer picture." — 收尾礼貌句</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="page" id="method">
+  <div class="hero">
+    <h2>🔮 押题：机器出题，你只负责练</h2>
+    <p>不用自己攒题单。把 JD 丢进「AI 押题」，它会把岗位要求、公司情报和你的素材卡对撞，直接给出分级题目 + 分段时间脚本。</p>
+    <div class="chips"><span>① 粘 JD</span><span>② 补公司情报</span><span>③ 一键生成</span><span>④ 必考优先掐表练</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">AI 押题的输入决定质量（重要）</h3>
+    <table>
+      <tr><th style="width:22%">输入项</th><th>怎么填才有用</th></tr>
+      <tr><td><b>JD 原文</b></td><td>整段粘贴，含「岗位职责 + 任职要求」。只写岗位名，模型只能给通用题。</td></tr>
+      <tr><td><b>公司情报</b></td><td>近 6 个月动态、主打产品、宣讲会原话、上一轮面经。这一栏越具体，题目越像真的。</td></tr>
+      <tr><td><b>面试轮次</b></td><td>电话筛只出快筛题；业务面出专业题；终面出动机与格局题。选错轮次题目会偏。</td></tr>
+      <tr><td><b>素材卡</b></td><td>不用填——系统自动读你云端的 50 张卡，并给每题挂上该用哪张。</td></tr>
+    </table>
+    <p class="small muted">想让助手联网检索（公司新闻 / 面经 / 行业动态）后再押题：把公司 + 岗位发我，我检索完直接写成押题包。</p>
+  </div>
+
+  <h2>🔮 押题五步法 <span class="small muted">人工复核用，约 40 分钟</span></h2>
+  <div class="card">
+    <ol>
+      <li><b>拆 JD</b>：把每条职责翻译成「面试官会怎么考」。JD 写「负责竞品分析」→ 会问「你做过什么分析？用什么框架？」</li>
+      <li><b>查公司</b>：官网新闻 + 近 6 个月动态 + 面经（脉脉/牛客/看准）。记下 3 个「这家公司最近在操心什么」，面试里用得上。</li>
+      <li><b>生成题单</b>：在「AI 押题」填公司 + 岗位 + JD，一次生成 10/15/20 题（已按必考/高频/可能分级，并挂好素材卡）。</li>
+      <li><b>改答题卡</b>：AI 已给分段时间脚本，你只做两件事——把不像自己说的话改成自己的语气，把数字核对准确。</li>
+      <li><b>掐表模拟</b>：进「题库总库」用计时练习对同一道题练 1 遍；录音回听，只改「啰嗦」和「没数字」两处。面试后在「面试复盘」记下被问倒的题。</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>JD 关键词 → 考察点 对照表</h3>
+    <table>
+      <tr><th style="width:34%">JD 里出现</th><th>大概率会问</th><th style="width:24%">从哪调素材</th></tr>
+      <tr><td>数据分析 / 洞察 / 看板</td><td>指标怎么定义、做过什么分析、口径怎么统一</td><td>A 组题库 + S2/S6</td></tr>
+      <tr><td>用户增长 / 拉新 / 转化</td><td>预算怎么花、AARRR 怎么拆、失败过什么</td><td>B 组题库 + S1/S4</td></tr>
+      <tr><td>跨部门协同 / 推动落地</td><td>别人不配合怎么办、你怎么保证执行</td><td>D 组题库 + S6</td></tr>
+      <tr><td>AI / 大模型 / Agent</td><td>场景怎么选、幻觉怎么治、怎么评测、AI 对岗位的影响</td><td>「AI 时代面试」题库 32 题 + S51–S56</td></tr>
+      <tr><td>行业研究 / 竞品 / 政策</td><td>研究框架、数据来源可靠性</td><td>E 组题库 + S7</td></tr>
+      <tr><td>供应链 / 交付 / 库存</td><td>库存周转、异常处理</td><td>F 组题库 + S8/S6</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>三类必被问的「软钉子」</h3>
+    <ul>
+      <li><b>「你没有相关经验」</b>→ 三步：承认 → 迁移（同构的能力） → 补齐计划（在读课程/正在做的项目）。</li>
+      <li><b>「数字是你做的吗」</b>→ 拆解贡献：平台给我什么、我做了什么、结果是团队共同的。诚实反而加分。</li>
+      <li><b>「你方向换了好几次」</b>→ 用一条主线解释：都是「用数据解决业务落地问题」，只是场景不同。</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="checklist">
+  <h2>✅ 面试 Checklist</h2>
+  <div class="grid3">
+    <div class="card"><h3>前 3 天</h3><ul><li>走完押题五步法，题单定稿</li><li>按岗位方向选 4–6 张素材卡</li><li>自我介绍 1 分钟版中英文各 3 遍（录音）</li><li>查面试官背景</li></ul></div>
+    <div class="card"><h3>前 1 天</h3><ul><li>数字口径自检</li><li>反问 3 个问题写好</li><li>英文关键短语过一遍</li><li>设备/路线/着装；简历 3 份</li></ul></div>
+    <div class="card"><h3>前 1 小时</h3><ul><li>30 秒自我介绍 + 岗位一句话定位</li><li>扫押题清单只看结论行</li><li>深呼吸，第一题答慢一点</li></ul></div>
+  </div>
+  <div class="card">
+    <h3>反问环节（挑 2 个）</h3>
+    <ul>
+      <li>「这个岗位未来 6 个月最重要的一个目标是什么？」</li>
+      <li>「团队目前最大的瓶颈是人手、流程还是数据？」</li>
+      <li>「以您的观察，在这个岗位做得好的人有什么共同点？」</li>
+      <li>「如果我入职，前 3 个月您希望我交付什么？」</li>
+      <li class="en"><span class="en-tag">EN</span>"What does success look like for this role in the first 6 months?"</li>
+    </ul>
+    <p class="small muted">禁忌：不问薪资福利、不问「我表现怎么样」、不问官网能查到的信息。</p>
+  </div>
+</section>
+
+<section class="page" id="aimethod">
+  <div class="hero">
+    <h2>🤖 AI 时代的面试：形式变了，打法也得变</h2>
+    <p>2026 校招里，AI 已经站在你和 offer 之间：AI 简历初筛、AI 视频面、AI 文本测评、AI 评分系统。这一页讲清每种形式怎么运作、它按什么标准给你打分、以及对应的打法。</p>
+    <div class="chips"><span>4 种 AI 面试形式</span><span>评分维度拆解</span><span>AI 面试 Checklist</span><span>题库 32 道专项题</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">四种 AI 面试形式与应对（先识别，再打法）</h3>
+    <table>
+      <tr><th style="width:18%">形式</th><th style="width:30%">它怎么运作</th><th>你的应对</th></tr>
+      <tr>
+        <td><b>① AI 视频面</b><br><span class="small muted">（AI 面试官提问，录像后机评+人评）</span></td>
+        <td>机器先转写你的回答，再按「内容相关性、结构完整度、关键词命中、流利度」打分，高分进人评</td>
+        <td>开头一句话先点题（机器对开头权重高）；结构词明显化——「我的做法分三步：第一…第二…第三…」，转写后结构一目了然；每题必须落 1–2 个数字；语速稳、别赶，卡壳就换说法别沉默</td>
+      </tr>
+      <tr>
+        <td><b>② AI 文本测评</b><br><span class="small muted">（限时开放题，AI 批改）</span></td>
+        <td>按「切题度、逻辑结构、具体性、岗位关键词覆盖」评分；泛泛而谈是最大死因</td>
+        <td>先花 30 秒列提纲（总-分-总）；每个论点必带一个具体案例或数字（STAR 压缩版）；把 JD 里的关键词自然嵌进回答（如「指标体系」「跨部门」）；字数写满要求区间，不写半截</td>
+      </tr>
+      <tr>
+        <td><b>③ AI 简历初筛</b></td>
+        <td>解析简历 → 与 JD 做关键词匹配打分 → 低于线直接被筛掉，人根本没看到</td>
+        <td>简历里 JD 关键词要用<b>原词</b>（JD 写「数据分析」你别只写「数据处理」）；技能写全称（SQL、Python、FineBI，别自创缩写）；经历描述含「动作+工具+结果数字」三要素</td>
+      </tr>
+      <tr>
+        <td><b>④ 人面的 AI 评分</b></td>
+        <td>很多公司人面也有 AI 实时转写+评分辅助面试官</td>
+        <td>和①同理：点题快、结构清、带数字；另外 AI 转写对专业术语敏感——多自然使用岗位术语反而加分</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">AI 评分的四个维度 → 每个维度怎么拿分</h3>
+    <table>
+      <tr><th style="width:18%">维度</th><th style="width:40%">机器在看什么</th><th>拿分动作</th></tr>
+      <tr><td><b>关键词命中</b></td><td>回答/JD 里的岗位词、技能词重合度</td><td>面试前把 JD 关键词抄下来，答题时自然嵌 2–3 个；题库「AI 时代面试」类的答案里已预埋高频词</td></tr>
+      <tr><td><b>结构完整度</b></td><td>有没有总分总、STAR 完整、点题句</td><td>第一句永远先点题（「这题我的答案是 X，原因有三」）；STAR 四要素一个不少，R 必带数字</td></tr>
+      <tr><td><b>具体性</b></td><td>数字、专有名词、独特细节的密度</td><td>每题至少 1 个数字 + 1 个专有名词（系统名/指标名/方法论名）——素材卡的「深挖问答」就是细节弹药库</td></tr>
+      <tr><td><b>流利度</b></td><td>语速稳定性、停顿、填充词（嗯啊那个）</td><td>计时练习到语速平缓；卡壳救场句提前练熟（「让我换个说法」）；宁可慢一点，不要忽快忽慢</td></tr>
+    </table>
+    <p class="small muted">核心心法：对 AI 说话要「对机器友好」——结构外露、关键词外露、数字外露；对人类面试官要「自然」——这两套不打架，好答案本来就兼有。</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">AI 面试当场 Checklist（开录前 10 分钟过一遍）</h3>
+    <ul>
+      <li><b>环境</b>：光线照脸不逆光、摄像头平视眼睛、背景干净；提前测耳机和网速，手机开热点备用</li>
+      <li><b>材料</b>：JD 打印/贴在镜头旁；素材卡号清单（S1–S56 索引）放手边，禁锢范围内能瞟一眼关键词</li>
+      <li><b>状态</b>：穿正装（机器对画面也有评估）、坐姿挺直、进镜头后先微笑 1 秒再开始答</li>
+      <li><b>作答纪律</b>：每题先点题、结构词说出口、R 落数字、答完一句「以上就是我的回答」干净收尾——别拖尾音</li>
+      <li><b>重测机会</b>：多数 AI 面试允许重录 1–2 次，第一遍永远用来「热身」，观察自己的语速和填充词</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">考前 48 小时 · AI 内容刷新清单</h3>
+    <ul>
+      <li>刷 <b>3 条 AI 动态</b>并各配一句自己的解读：1 条技术进展 + 1 条行业应用 + 1 条监管政策（对应题库 AI-30，被问「最近的 AI 新闻」时用）</li>
+      <li>把自己的「AI 案例」练到 60 秒脱口而出：S53 会议纪要 40→15 分钟是首选，S27 三场景是备选</li>
+      <li>翻一遍题库「AI 时代面试」类 32 题，重点练 AI-01/02/07/11/14 五道（使用证据/提示词/岗位影响/落地方案/产品设计）</li>
+      <li>检查简历：目标 JD 的关键词是否都已原词出现在简历里（AI 初筛是关键词匹配，不是语义理解）</li>
+      <li>如果目标公司有 AI 产品，至少体验 15 分钟并记 3 条观察——反问环节用</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">别踩的坑（AI 面试特供）</h3>
+    <ul>
+      <li><b>背稿痕迹</b>：逐字背诵的语速忽快忽慢，机器对语速平稳度敏感——背「骨架+数字」，现场组句</li>
+      <li><b>答非所问</b>：AI 对切题度打分极严，听不清就要求重复（「不好意思刚才没听清，麻烦您再说一遍」），比硬答强十倍</li>
+      <li><b>过度包装 AI 能力</b>：说「精通大模型」然后被追问微调细节就崩——按 S49 诚实边界答，AI 岗面试官最反感吹牛</li>
+      <li><b>把 AI 面试当小测试敷衍</b>：AI 初筛挂了连人面的机会都没有，认真程度应该是「比人面更讲结构」</li>
+    </ul>
+  </div>
+</section>
+
+<section class="page" id="stories"><div id="storiesBox"></div></section>
+<section class="page" id="directions"><div id="directionsBox"></div></section>
+<section class="page" id="intros"><div id="introsBox"></div></section>
+
+<section class="page" id="predict">
+  <div class="hero">
+    <h2>🎯 AI 押题引擎</h2>
+    <p>分两步走：先按公司 + 岗位押出题单和 5 分钟骨架；再逐题生成长讲稿（900–1100 字，照着念就是 5 分钟）。稿子哪里不像你的真实经历，直接在题目下方的框里说一句，它就按你的话改，旧版本保留可回退。</p>
+    <div class="chips"><span>🔴 必考 / 🟠 高频 / 🟡 可能</span><span>⏱ 5 分钟长稿（900–1100 字）</span><span>✏️ 逐题按你的话改</span><span>🧩 自动挂素材卡</span></div>
+  </div>
+
+  <div class="card" id="predictForm">
+    <div class="grid2">
+      <div><label>公司 *</label><input type="text" id="pCompany" placeholder="例如：吉利汽车 / 宝洁 / 中金公司"></div>
+      <div><label>岗位 *</label><input type="text" id="pRole" placeholder="例如：数智化洞察岗 / 商业分析 / 供应链管培"></div>
+    </div>
+    <div class="grid5">
+      <div><label>面试轮次</label><select id="pRound"></select></div>
+      <div><label>岗位方向</label><select id="pDir"></select></div>
+      <div><label>面试日期</label><input type="text" id="pDate" placeholder="2026-11-05"></div>
+      <div><label>题量</label><select id="pCount"><option>8</option><option selected>12</option><option>16</option><option>20</option></select></div>
+      <div><label>每题口述时长</label><select id="pDur"><option value="300" selected>5 分钟（推荐）</option><option value="240">4 分钟</option><option value="180">3 分钟</option><option value="90">90 秒（快筛）</option></select></div>
+    </div>
+    <label>JD / 岗位描述（强烈建议整段粘贴，押题准确度差别很大）</label>
+    <textarea id="pJD" style="min-height:118px" placeholder="岗位职责：&#10;1. 负责……&#10;任职要求：&#10;1. 熟悉 SQL / Python……"></textarea>
+    <label>公司情报（可选：官网、财报、近期新闻、宣讲会、面经）</label>
+    <textarea id="pIntel" placeholder="例：25 年主推银河系列与智驾；宣讲会强调「数智化转型」；上一轮面经问到指标拆解……"></textarea>
+    <div class="grid2">
+      <div><label>生成模型</label><select id="pModel"></select></div>
+      <div style="display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="pRunBtn" onclick="JPAI.run()">⚡ 生成押题题单</button>
+        <button class="btn ghost" id="pStopBtn" onclick="JPAI.stop()" style="display:none">停止</button>
+      </div>
+    </div>
+    <span class="msg" id="pMsg"></span>
+    <div class="prog" id="pProgress">
+      <div class="progbar"><i></i></div>
+      <div class="prog-meta"><span id="pProgTxt"></span></div>
+      <div class="think" id="pThink"></div>
+    </div>
+    <div class="mini-tip">页面里的模型不联网：公司动态请粘到「公司情报」。想让助手联网检索（公司新闻 / 面经 / 行业动态）后再押题，把公司 + 岗位发我，我检索完直接写成押题包。</div>
+  </div>
+
+  <div id="pResult"></div>
+  <div id="predictList"></div>
+</section>
+
+<section class="page" id="review">
+  <h2>🗓 面试复盘 <span class="chip priv">个人区</span> <span class="small muted">云端保存，多设备同步；复盘喂给下次押题</span></h2>
+  <div class="card">
+    <div class="grid2">
+      <div><label>公司</label><input type="text" id="rCompany"></div>
+      <div><label>岗位</label><input type="text" id="rRole" placeholder="例：数智化洞察岗"></div>
+    </div>
+    <div class="grid2">
+      <div><label>日期 / 轮次</label><input type="text" id="rDate" placeholder="2026-11-05 二面"></div>
+      <div><label>结果 / 自我感觉</label><input type="text" id="rResult" placeholder="通过 / 挂了 / 一般"></div>
+    </div>
+    <div class="grid2">
+      <div><label>押中了几题</label><input type="text" id="rHit" placeholder="押中 6 / 共 18"></div>
+      <div><label>AI 面试环节？</label><select id="rAI"><option value="">无 / 不清楚</option><option>AI 视频面</option><option>AI 文本测评</option><option>AI 简历初筛被卡</option><option>人面带 AI 评分</option></select></div>
+    </div>
+    <label>答得好的题（押中的 & 发挥好的，记下用了哪张素材卡）</label><textarea id="rGood" style="min-height:56px" placeholder="例：宝洁目标题——用的 S1，追问口径都接住了……"></textarea>
+    <label>被问倒的题 & 现场答了什么（原题尽量记原话）</label><textarea id="rMiss" style="min-height:72px" placeholder="例：「你说的转化率 8% 是怎么算的」——现场口径没讲清……"></textarea>
+    <label>本次最大教训 / 下次改进动作（1–3 条）</label><textarea id="rLesson" style="min-height:56px" placeholder="例：数字口径必须提前背熟；反问环节问得太浅……"></textarea>
+    <button class="btn" onclick="saveReview()">保存到云端</button>
+    <span class="msg" id="rMsg"></span>
+  </div>
+  <div id="reviewList"></div>
+</section>
+
+</main>
+
+<div class="mask" id="mask">
+  <div class="modal">
+    <h3 style="margin-top:0">登录个人区</h3>
+    <p class="small muted">个人素材卡与记录只有登录后可见。首次登录自动创建账号。</p>
+    <div class="subnav" style="border:none;margin-top:8px">
+      <button class="sbtn on" id="tabPhone" onclick="switchLogin('phone')">手机号</button>
+      <button class="sbtn" id="tabEmail" onclick="switchLogin('email')">邮箱</button>
+    </div>
+    <div id="phonePane">
+      <label>手机号</label>
+      <input type="tel" id="phoneInput" placeholder="11 位手机号" oninput="clearMsg('loginMsg')">
+      <div class="codebox" style="margin-top:8px">
+        <input type="text" id="phoneCode" placeholder="6 位验证码">
+        <button class="btn ghost sm" id="phoneSendBtn" onclick="sendPhoneCode()" style="white-space:nowrap">获取验证码</button>
+      </div>
+      <button class="btn" onclick="submitPhoneOtp()" style="width:100%">登录 / 注册</button>
+    </div>
+    <div id="emailPane" style="display:none">
+      <label>邮箱</label>
+      <input type="email" id="emailInput" placeholder="you@example.com" oninput="clearMsg('loginMsg')">
+      <div class="codebox" style="margin-top:8px">
+        <input type="text" id="emailCode" placeholder="6 位验证码">
+        <button class="btn ghost sm" id="emailSendBtn" onclick="sendEmailCode()" style="white-space:nowrap">获取验证码</button>
+      </div>
+      <button class="btn" onclick="submitEmailOtp()" style="width:100%">登录 / 注册</button>
+    </div>
+    <div class="msg" id="loginMsg"></div>
+    <button class="btn ghost" onclick="closeMask()" style="width:100%;margin-top:12px">取消</button>
+  </div>
+</div>
+<script src="demo-data.js"></script>
+<script>
+if(typeof WorkBuddyCloud==="undefined"){
+  var _s=document.createElement("script");
+  _s.src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js";
+  document.head.appendChild(_s);
+}
+</script>
+<script>
+/* ================= 配置 ================= */
+const DEMO_MODE = true;
+const CFG = null;
+
+/* ================= 分轮次 ================= */
+const ROUNDS = [
+ {t:"电话 / 视频初筛（HR 或招聘专员，15–30 分钟）",focus:"筛硬条件：到岗时间、薪资区间、稳定性、表达是否清楚",trap:"语速太快、答太长、对岗位一无所知",prep:"30 秒自我介绍 + 3 句话讲清最近一段经历 + 期望薪资区间 + 一个反问"},
+ {t:"HR 面（30–45 分钟）",focus:"动机、稳定性、文化匹配、性价比",trap:"过度坦诚缺点、薪资报太低或太高、表现出「先来试试」",prep:"HR 30 题里挑动机+规划两组准备，薪资给区间并说明依据"},
+ {t:"业务面 / 一面（45–60 分钟）",focus:"能不能干活：专业能力、方法论、案例细节",trap:"只讲结论没过程、数字经不起追问、说不出自己的具体动作",prep:"专业方向题库 8–10 题 + 3 张素材卡讲到细节（含失败与调整）"},
+ {t:"交叉面 / 二面（不同部门负责人）",focus:"协作方式、边界感、能否被别的团队接受",trap:"贬低前团队/同事、说不清自己与他人的分工",prep:"准备「跨部门协作」与「冲突处理」两题；S6 是主打"},
+ {t:"总监 / 高管终面（20–30 分钟）",focus:"格局、判断力、长期意愿、是否「值得培养」",trap:"纠结细节、问薪资福利、答得太滑",prep:"一句话讲清「我能为业务解决什么问题」+ 对行业的 1 个判断 + 反问战略问题"},
+ {t:"群面 / 无领导小组（40–60 分钟）",focus:"在群体中的角色感、逻辑、影响力",trap:"抢话、沉默、只反对不提方案",prep:"见「群面」页的框架话术，提前定好你要抢的角色"}
+];
+
+/* ================= 英文面试 15 题 ================= */
+const ENG15 = [
+ ["Tell me about yourself.","身份（1 句）→ 主线人设（1 句）→ 2 个证据（各 2 句，带数字）→ 为什么这个岗位（1 句）","I'm a Master's student in Business Information Systems at a Hong Kong university. What defines me is being data-driven but hands-on…"],
+ ["Why this role?","岗位要求 3 点 → 我的证据 3 点 → 我想补的 1 点","Three things stand out to me about this role…"],
+ ["Why our company?","具体产品/近期动作 → 与我能力的连接 → 我能贡献什么","What drew me is your recent move into…, which is exactly where my experience in… fits."],
+ ["What are your strengths?","3 个优点，每个配一个 15 秒证据","I'd pick three: structured thinking, ownership, and speed of learning."],
+ ["What's your weakness?","真实非致命 + 管理方式 + 已经在做的改进","I tend to over-prepare. What I do now is set a hard cutoff…"],
+ ["Tell me about a challenge you faced.","STAR，压缩到 90 秒，R 必须带数字","The hardest situation was… My task was to… I broke it into three steps…"],
+ ["Tell me about a time you worked in a team.","角色 + 机制 + 结果（机制是关键）","What made it work was the mechanism we set up, not just effort."],
+ ["Tell me about a conflict.","分歧点 → 你的处理 → 结果 → 学到什么","We disagreed on priorities. I asked what problem we were actually solving…"],
+ ["Tell me about a failure.","真实失败 + 归因 + 改进","I got the segmentation wrong at first… What I changed afterwards was…"],
+ ["Describe a leadership experience.","你带了几个人、解决了什么、结果","I built a campus team from zero: recruiting, training, incentives…"],
+ ["Where do you see yourself in five years?","能力路径而不是职级路径","In five years I want to be the person who can turn a vague business question into a measurable plan."],
+ ["Why should we hire you?","3 个匹配点 + 1 个差异化（AI + 数据 + 落地）","Three reasons: I've run the full loop from data to execution…"],
+ ["Walk me through a data project.","问题 → 数据 → 方法 → 发现 → 落地 → 结果","The business question was where to put our promotion budget…"],
+ ["How do you use AI in your work?","具体工具 + 具体任务 + 效果（务必提前准备案例）","I use AI as a first-draft engine: for data cleaning, first-pass analysis, and drafting…"],
+ ["Do you have any questions for us?","2 个：业务目标 + 成功标准（见清单页）","Yes — what does success look like for this role in the first six months?"]
+].map(x=>({q:x[0],frame:x[1],key:x[2]}));
+
+/* ================= 云服务与状态 ================= */
+let cloud=null, session=null, ITEMS=[], RECS=[], cloudErr="";
+const $ = id=>document.getElementById(id);
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function el(html){const d=document.createElement("div");d.innerHTML=html.trim();return d.firstElementChild}
+
+async function ensureSdk(timeout){
+  timeout = timeout || 5000;
+  const t0 = Date.now();
+  while(typeof WorkBuddyCloud === "undefined" && Date.now() - t0 < timeout){
+    await new Promise(r=>setTimeout(r,150));
+  }
+  return typeof WorkBuddyCloud !== "undefined";
+}
+function initCloud(){
+  if(typeof WorkBuddyCloud==="undefined"){ cloudErr="云端 SDK 未加载（可能处于离线或本地打开）。请使用线上发布链接访问。"; return; }
+  try{ cloud = WorkBuddyCloud.createWorkBuddyCloud(CFG); }catch(e){ cloudErr="云端初始化失败："+e.message; }
+}
+
+function renderWho(){
+  const box=$("who");
+  if(DEMO_MODE){ box.innerHTML=`<span class="status">演示模式 · GitHub 静态版</span>`; return; }
+  if(cloudErr){ box.innerHTML=`<span class="status off">云端不可用</span>`; return; }
+  if(session){
+    const u=session.user||{}; const label=u.name||u.email||u.phone||"已登录";
+    box.innerHTML=`<span class="status">已登录 ${esc(label)}</span><button class="btn ghost sm" onclick="doLogout()">退出</button>`;
+  }else{
+    box.innerHTML=`<span class="status off">未登录 · 个人区不可见</span><button class="btn sm" onclick="openMask()">登录</button>`;
+  }
+}
+
+/* ---- 登录 ---- */
+let pendingOtp=null, pendingMode="phone";
+function openMask(){ $("mask").classList.add("on"); }
+function closeMask(){ $("mask").classList.remove("on"); $("loginMsg").textContent=""; }
+function switchLogin(m){
+  pendingMode=m;
+  $("phonePane").style.display = m==="phone"?"block":"none";
+  $("emailPane").style.display = m==="email"?"block":"none";
+  $("tabPhone").classList.toggle("on",m==="phone");
+  $("tabEmail").classList.toggle("on",m==="email");
+}
+function setMsg(id,txt,ok){ const e=$(id); e.textContent=txt; e.className="msg "+(ok?"ok":"err"); }
+function clearMsg(id){ $(id).textContent=""; }
+function countdown(btn,label){
+  let n=60; btn.disabled=true; const t0=label+"(60s)"; btn.textContent=t0;
+  const t=setInterval(()=>{ n--; btn.textContent=label+"("+n+"s)"; if(n<=0){clearInterval(t);btn.disabled=false;btn.textContent=label;} },1000);
+}
+async function sendPhoneCode(){
+  if(!cloud){ setMsg("loginMsg",cloudErr||"云端不可用"); return; }
+  const phone=$("phoneInput").value.trim();
+  if(!/^1\d{10}$/.test(phone)){ setMsg("loginMsg","请输入正确的 11 位手机号"); return; }
+  $("phoneSendBtn").disabled=true;
+  const r=await cloud.auth.sendOtp({phone});
+  if(r.error){ setMsg("loginMsg",r.error.message||"发送失败"); $("phoneSendBtn").disabled=false; return; }
+  pendingOtp={phone,...r.data};
+  setMsg("loginMsg","验证码已发送",true); countdown($("phoneSendBtn"),"重新获取");
+}
+async function submitPhoneOtp(){
+  if(!cloud) return;
+  const phone=$("phoneInput").value.trim(), code=$("phoneCode").value.trim();
+  if(!pendingOtp||pendingOtp.phone!==phone){ setMsg("loginMsg","请先获取该手机号的验证码"); return; }
+  if(!code){ setMsg("loginMsg","请输入验证码"); return; }
+  const r=await cloud.auth.verifyOtp({phone:pendingOtp.phone,verificationId:pendingOtp.verificationId,isExistingUser:pendingOtp.isExistingUser,token:code});
+  if(r.error){ setMsg("loginMsg",r.error.message||"验证失败"); return; }
+  pendingOtp=null; closeMask(); await boot();
+}
+async function sendEmailCode(){
+  if(!cloud){ setMsg("loginMsg",cloudErr||"云端不可用"); return; }
+  const email=$("emailInput").value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ setMsg("loginMsg","请输入正确的邮箱"); return; }
+  $("emailSendBtn").disabled=true;
+  const r=await cloud.auth.sendOtp({email});
+  if(r.error){ setMsg("loginMsg",r.error.message||"发送失败"); $("emailSendBtn").disabled=false; return; }
+  pendingOtp={email,...r.data};
+  setMsg("loginMsg","验证码已发送（若没收到，检查垃圾邮件）",true); countdown($("emailSendBtn"),"重新获取");
+}
+async function submitEmailOtp(){
+  if(!cloud) return;
+  const email=$("emailInput").value.trim(), code=$("emailCode").value.trim();
+  if(!pendingOtp||pendingOtp.email!==email){ setMsg("loginMsg","请先获取该邮箱的验证码"); return; }
+  if(!code){ setMsg("loginMsg","请输入验证码"); return; }
+  const r=await cloud.auth.verifyOtp({email:pendingOtp.email,verificationId:pendingOtp.verificationId,isExistingUser:pendingOtp.isExistingUser,token:code});
+  if(r.error){ setMsg("loginMsg",r.error.message||"验证失败"); return; }
+  pendingOtp=null; closeMask(); await boot();
+}
+async function doLogout(){
+  if(!cloud) return;
+  await cloud.auth.signOut(); session=null; ITEMS=[]; RECS=[];
+  renderWho(); renderPersonal(); alert("已退出登录");
+}
+
+/* ---- 数据加载 ---- */
+async function boot(){
+  if(DEMO_MODE){
+    session={user:{name:"演示访客"}};
+    ITEMS=(window.DEMO_ITEMS||[]).slice();
+    RECS=[];
+    renderWho();
+    const go=()=>renderPersonal();
+    if(document.readyState==="complete") go(); else window.addEventListener("load",go);
+    return;
+  }
+  await ensureSdk();
+  initCloud(); renderWho();
+  if(!cloud){ renderPersonal(); return; }
+  try{
+    const s=await cloud.auth.getSession();
+    session = s.data || null;
+  }catch(e){ session=null; }
+  renderWho();
+  if(session){
+    try{ await cloud.database.rpc("bootstrap_my_workbench"); }catch(e){ console.warn("bootstrap skipped",e); }
+    await loadData();
+  }
+  renderPersonal();
+}
+async function loadData(){
+  const its=await cloud.database.from("jp_items").select("sid,kind,payload").order("sid");
+  if(its.error){ console.warn(its.error); }
+  ITEMS = its.data||[];
+  const rs=await cloud.database.from("jp_records").select("id,kind,payload,created_at").order("created_at",{ascending:false});
+  if(rs.error){ console.warn(rs.error); }
+  RECS = rs.data||[];
+}
+
+/* ---- 个人区渲染 ---- */
+function gateHtml(what){
+  if(cloudErr) return `<div class="gate"><h3>云端未就绪</h3><p class="small">${esc(cloudErr)}</p></div>`;
+  return `<div class="gate"><h3>需要登录</h3>
+    <p class="small muted">「${what}」属于个人区，只有你能看到。登录后个人素材与记录会跟着账号走，换设备也在。</p>
+    <button class="btn" onclick="openMask()">手机号 / 邮箱登录</button></div>`;
+}
+function renderPersonal(){
+  if(!session){
+    ["storiesBox","directionsBox","introsBox"].forEach(id=>{ if($(id)) $(id).innerHTML=gateHtml("个人素材"); });
+    $("predictList").innerHTML=gateHtml("AI 押题"); if($("pResult")) $("pResult").innerHTML=""; $("reviewList").innerHTML=gateHtml("面试复盘");
+    // 隐藏表单，避免误操作
+    const pf=$("predictForm"); if(pf) pf.style.display="none";
+    return;
+  }
+  const pf=$("predictForm"); if(pf) pf.style.display="";
+  renderStories(); renderDirections(); renderIntros(); (window.JPAI&&JPAI.render()); renderReview();
+}
+function renderStories(){
+  const box=$("storiesBox"); if(!box) return;
+  const stories=ITEMS.filter(x=>x.kind==="story");
+  if(!stories.length){ box.innerHTML=`<div class="card">还没有素材卡。<button class="btn" onclick="reBootstrap()">从模板初始化</button></div>`; return; }
+  const todo=stories.filter(x=>(x.payload||{}).todo).length;
+  box.innerHTML = `<h2>🧩 我的素材卡 <span class="chip priv">个人区</span> <span class="small muted">${stories.length} 张 · 云端同步</span>${todo?` <span class="chip warn">${todo} 张待补充</span>`:""}</h2>
+   <p class="small muted">每张卡都带证据来源与深挖问答——面试官追问时直接用「深挖问答」里的话接。哪里和你的真实经历不符，卡片底部的修改框里说一句，AI 按你的话改，旧版本保留可回退。</p>` +
+   stories.map(it=>{
+    const s=it.payload||{};
+    return `<div class="card" id="card-${esc(s.id)}">
+      <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start">
+        <div><h3 style="margin-top:0">${esc(s.id)} · ${esc(s.title)}</h3>
+        <p class="muted small">${esc(s.period||"")} · ${esc(s.role||"")}</p></div>
+        <div style="display:flex;gap:6px">${s.todo?'<span class="chip warn">待补充</span>':""}
+        <button class="btn ghost sm" onclick="editStory('${esc(s.id)}')">JSON 编辑</button></div>
+      </div>
+      ${(window.RV&&s._revs&&s._revs.length)?RV.versHtml(s._revs,(s._cur??-1),"story",s.id):""}
+      <div>${(s.tags||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join("")}</div>
+      <div class="star">
+        <b>S 情境</b><span>${esc(s.S||"—")}</span>
+        <b>T 任务</b><span>${esc(s.T||"—")}</span>
+        <b>A 行动</b><span>${esc(s.A||"—")}</span>
+        <b>R 结果</b><span>${esc(s.R||"—")}</span>
+      </div>
+      ${s.use?`<p class="small muted">🎯 适用题型：${esc(s.use)}</p>`:""}
+      ${s.risk?`<p class="small riskline">⚠️ 被追问风险：${esc(s.risk)}</p>`:""}
+      ${(s.depth||[]).length?`<details class="depthbox"><summary>🔍 深挖问答 ${s.depth.length} 条 <span class="small muted">（面试官大概率这么追）</span></summary>
+        ${s.depth.map(d=>`<div class="dq"><b>Q</b> <span>${esc(d.q)}</span><div class="da"><b>A</b> <span>${esc(d.a)}</span></div></div>`).join("")}
+      </details>`:""}
+      <p class="small muted">📎 证据来源：${(s.sources||[]).map(x=>`<span class="chip src">${esc(x)}</span>`).join("")}</p>
+      ${window.RV?RV.revboxHtml("story",s.id,RV.STORY_QUICK):""}
+    </div>`;
+   }).join("");
+  if(window.RV) RV.hydrateMyVer();
+}
+function editStory(sid){
+  const it=ITEMS.find(x=>x.sid===sid); if(!it) return;
+  const card=$("card-"+sid); if(!card) return;
+  card.innerHTML=`<h3 style="margin-top:0">编辑 ${esc(sid)}</h3>
+    <p class="small muted">JSON 格式；不要改动 id 字段。保存后立即同步到云端。</p>
+    <textarea class="code" id="edit-${sid}">${esc(JSON.stringify(it.payload,null,2))}</textarea>
+    <button class="btn" onclick="saveStory('${sid}')">保存</button>
+    <button class="btn ghost" onclick="renderStories()">取消</button>
+    <span class="msg" id="msg-${sid}"></span>`;
+}
+async function saveStory(sid){
+  const raw=$("edit-"+sid).value;
+  let payload;
+  try{ payload=JSON.parse(raw); }catch(e){ setMsg("msg-"+sid,"JSON 格式错误："+e.message); return; }
+  const r=await cloud.database.from("jp_items").update({payload,updated_at:new Date().toISOString()}).eq("sid",sid).select();
+  if(r.error){ setMsg("msg-"+sid,r.error.message||"保存失败"); return; }
+  if(!r.data||!r.data.length){ setMsg("msg-"+sid,"未更新（行不属于当前账号？）"); return; }
+  await loadData(); renderStories();
+}
+async function reBootstrap(){
+  await cloud.database.rpc("bootstrap_my_workbench"); await loadData(); renderPersonal();
+}
+function renderDirections(){
+  const box=$("directionsBox"); if(!box) return;
+  const dirs=ITEMS.filter(x=>x.kind==="direction");
+  box.innerHTML=`<h2>🧭 岗位方向讲法 <span class="chip priv">个人区</span> <span class="small muted">${dirs.length} 个方向 · 云端同步</span></h2>
+   <p class="small muted">同一段经历，不同岗位不同讲法。每个方向给出：面试官在筛什么、答题主线、高频问答、短板应对、英文定位和考前清单。哪里不对，卡片底部说一句就能改。</p>` +
+   dirs.map(it=>{const p=it.payload||{};return `<div class="card" id="dir-${esc(it.sid)}">
+     ${(window.RV&&p._revs&&p._revs.length)?RV.versHtml(p._revs,(p._cur??-1),"dir",it.sid):""}
+     <h3 style="margin-top:0">${esc(p.title)}</h3>
+     <p><b>一句话定位：</b>${esc(p.position)}</p>
+     <p><b>主打素材：</b>${(p.stories||[]).map(s=>`<span class="chip" onclick="jumpStory('${esc(s)}')">${esc(s)}</span>`).join("")}</p>
+     <p><b>技能话术：</b>${esc(p.skill)}</p>
+     ${p.viewer?`<p><b>🔍 面试官在筛什么：</b>${esc(p.viewer)}</p>`:""}
+     ${p.jdkeys?`<p class="small muted"><b>JD 关键词：</b>${esc(p.jdkeys)}</p>`:""}
+     ${p.line?`<p><b>🧵 答题主线：</b>${esc(p.line)}</p>`:""}
+     ${(p.qa||[]).length?`<div class="star" style="grid-template-columns:auto 1fr">${p.qa.map(x=>`<b style="color:var(--warn)">Q</b><span><b>${esc(x.q)}</b><br>${esc(x.a)}</span>`).join("")}</div>`:""}
+     <p><b>常被挑战：</b>${esc(p.challenge)}</p>
+     ${p.gapqa?`<p><b>最狠的质疑：</b>「${esc(p.gapqa.q)}」<br><b>应对：</b>${esc(p.gapqa.a)}</p>`:""}
+     ${p.gap?`<p class="small muted"><b>短板与补法：</b>${esc(p.gap)}</p>`:""}
+     <p><b>加分/注意：</b>${esc(p.bonus)}</p>
+     ${p.en?`<p class="en"><span class="en-tag">EN</span>${esc(p.en)}</p>`:""}
+     ${(p.plan||[]).length?`<div class="card" style="margin:8px 0 0;background:var(--accent-soft);border-color:#c7d2fe"><b>⏰ 面试前 48 小时清单</b><ol class="small" style="margin:4px 0 0;padding-left:20px">${p.plan.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:""}
+     ${window.RV?RV.revboxHtml("dir",it.sid,RV.DIR_QUICK):""}
+   </div>`}).join("");
+}
+function jumpStory(sid){
+  document.querySelector('.tab[data-p="stories"]').click();
+  setTimeout(()=>{ const c=$("card-"+sid); if(c){ c.classList.add("hl"); c.scrollIntoView({behavior:"smooth",block:"center"}); } },100);
+}
+function renderIntros(){
+  const box=$("introsBox"); if(!box) return;
+  const it=ITEMS.find(x=>x.kind==="intro"); const p=it?it.payload:{};
+  const block=(title,key,obj)=>{
+    if(!obj) return "";
+    const revs=(p._revs||{})[key];
+    return `<div class="card" id="intro-${esc(key)}">
+      <h3 style="margin-top:0">${title}</h3>
+      ${(window.RV&&revs&&revs.length)?RV.versHtml(revs,(p._cur||{})[key]??-1,"intro",key):""}
+      <p>${esc(obj.cn||"")}</p>
+      <p class="en"><span class="en-tag">EN</span>${esc(obj.en||"")}</p>
+      ${window.RV?RV.revboxHtml("intro",key,RV.INTRO_QUICK):""}
+    </div>`;
+  };
+  box.innerHTML=`<h2>🎤 自我介绍稿 <span class="chip priv">个人区</span></h2>
+    <p class="small muted">每个版本都能改：和真实经历不符、想换个重点、要压时长——在框里说一句就行。</p>`+
+    block("⏱ 通用 30 秒版（任何面试开头）","common30",p.common30)+
+    `<div class="grid2">`+block("⏱ 1 分钟 · 商分/数据方向","A",p.A)+block("⏱ 1 分钟 · 运营/增长方向","B",p.B)+`</div>`+
+    block("⏱ 1 分钟 · AI / 产品方向","C",p.C)+
+    `<div class="card"><h3 style="margin-top:0">伸缩规则</h3><ul>${(p.rules||[]).map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>`;
+}
+
+/* ---- 记录：复盘 ---- */
+async function saveReview(){
+  if(DEMO_MODE){ alert("演示版（GitHub 静态版）不开放保存——完整版支持云端存储。"); return; }
+  if(!session){ alert("请先登录"); return; }
+  const payload={company:$("rCompany").value.trim(),role:$("rRole").value.trim(),date:$("rDate").value.trim(),result:$("rResult").value.trim(),hit:$("rHit").value.trim(),ai:$("rAI").value,good:$("rGood").value.trim(),miss:$("rMiss").value.trim(),lesson:$("rLesson").value.trim()};
+  if(!payload.company){ setMsg("rMsg","请填公司"); return; }
+  const owner_name=(session.user&&session.user.name)||null;
+  const r=await cloud.database.from("jp_records").insert({kind:"review",payload,owner_name}).select();
+  if(r.error){ setMsg("rMsg",r.error.message||"保存失败"); return; }
+  ["rCompany","rRole","rDate","rResult","rHit","rGood","rMiss","rLesson"].forEach(i=>$(i).value="");
+  $("rAI").value="";
+  await loadData(); renderReview(); setMsg("rMsg","已保存到云端",true);
+}
+function renderReview(){
+  const box=$("reviewList"); if(!box) return;
+  const rows=RECS.filter(x=>x.kind==="review").sort((a,b)=>b.id-a.id);
+  box.innerHTML=`<h3>历史复盘（${rows.length}）<span class="small muted"> · AI 分析会横向对比你的所有复盘，找重复出现的模式</span></h3>`+(rows.map(r=>{
+    const p=r.payload||{};
+    return `<div class="record rev"><b>${esc(p.company)}${p.role?" · "+esc(p.role):""}</b>
+      <span class="muted small">${esc(p.date||"")} ｜ ${esc(p.result||"")} ｜ 押中：${esc(p.hit||"—")} ｜ ${p.ai?("AI 环节："+esc(p.ai)):""} ｜ ${new Date(r.created_at).toLocaleString()}</span>
+      ${p.good?`<p class="small" style="color:#15803d"><b>✅ 答得好：</b><br>${esc(p.good).replace(/\n/g,"<br>")}</p>`:""}
+      ${p.miss?`<p class="small"><b>❌ 被问倒：</b><br>${esc(p.miss).replace(/\n/g,"<br>")}</p>`:""}
+      ${p.lesson?`<p class="small"><b>📝 教训：</b><br>${esc(p.lesson).replace(/\n/g,"<br>")}</p>`:""}
+      ${p.analysis?`<div class="mytext"><b>🤖 AI 复盘分析</b>${p.analysisAt?`<span class="muted small">（${new Date(p.analysisAt).toLocaleString()}）</span>`:""}${p.analysis.split(/\n+/).map(x=>`<p>${esc(x)}</p>`).join("")}</div>`:""}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+        <button class="btn ghost sm" onclick="analyzeReview(${r.id})" ${p.analysis?'data-re="1"':''}>${p.analysis?"🔄 重新分析":"🤖 AI 复盘分析"}</button>
+        <button class="btn del sm" onclick="delRec(${r.id},'review')">删除</button>
+      </div></div>`;
+  }).join("")||`<p class="muted small">暂无记录。面完 24 小时内趁记忆新鲜填一条——被问倒的题喂给 AI 押题，下一场就不再挨打。</p>`);
+}
+async function analyzeReview(id){
+  if(!session){ alert("请先登录"); return; }
+  const rec=RECS.find(x=>x.id===id&&x.kind==="review");
+  if(!rec) return;
+  const btn=event&&event.target;
+  if(btn){ btn.disabled=true; btn.textContent="分析中…"; }
+  try{
+    const all=RECS.filter(x=>x.kind==="review").sort((a,b)=>a.id-b.id);
+    const brief=all.map(x=>{const p=x.payload||{};return `【${p.company||"?"} ${p.role||""} ${p.date||""}｜${p.result||""}｜押中:${p.hit||"—"}｜AI环节:${p.ai||"无"}】答得好:${(p.good||"无").replace(/\n/g,"；")}｜被问倒:${(p.miss||"无").replace(/\n/g,"；")}｜教训:${(p.lesson||"无").replace(/\n/g,"；")}`;}).join("\n");
+    const system="你是面试复盘教练。输入是求职者所有面试复盘的记录（目标岗位：商分/运营/AI产品/项目管理方向，硕士应届生）。请横向对比所有记录，输出 JSON：{\"patterns\":[\"重复出现的失分模式，1-2 条，每条一句\"],\"strengths\":[\"稳定发挥的优势，1 条\"],\"actions\":[\"下场面试前最该做的 3 个具体动作，可执行不要空话\"]}。patterns 要真的跨场次对比（比如同一类题被问倒两次），不要复述单场内容。只输出 JSON。";
+    const user=brief;
+    const model=($("pModel")&&$("pModel").value)||"auto";
+    const stream=cloud.llm.chat.completions.create({model,messages:[{role:"system",content:system},{role:"user",content:user}],stream:true,temperature:0.4});
+    let text="";
+    for await (const chunk of stream){ const d=(chunk.choices&&chunk.choices[0]&&chunk.choices[0].delta)||{}; if(d.content) text+=d.content; }
+    let t=String(text||"").trim().replace(/^```(?:json)?/i,"").replace(/```$/,"").trim();
+    const a=t.indexOf("{"),b=t.lastIndexOf("}"); if(a<0||b<a) throw new Error("模型没有返回 JSON");
+    const out=JSON.parse(t.slice(a,b+1).replace(/,\s*([}\]])/g,"$1"));
+    const lines=[...(out.patterns||[]).map(x=>"🔁 "+x),...(out.strengths||[]).map(x=>"💪 "+x),...(out.actions||[]).map(x=>"🎯 "+x)];
+    const payload=Object.assign({},rec.payload,{analysis:lines.join("\n"),analysisAt:new Date().toISOString()});
+    const r=await cloud.database.from("jp_records").update({payload}).eq("id",id).select();
+    if(r.error){ alert("保存失败："+r.error.message); return; }
+    await loadData(); renderReview();
+  }catch(e){ alert("分析失败："+e.message); }
+  finally{ if(btn){ btn.disabled=false; } }
+}
+async function delRec(id,kind){
+  if(!confirm("确认删除这条记录？")) return;
+  const r=await cloud.database.from("jp_records").delete().eq("id",id).select();
+  if(r.error){ alert("删除失败："+r.error.message); return; }
+  if(!r.data||!r.data.length){ alert("未删除（记录不属于当前账号）"); return; }
+  await loadData(); kind==="predict"?(window.JPAI&&JPAI.render()):renderReview();
+}
+
+/* ---- 旧版本地记录迁移 ---- */
+function hasLocalOld(){
+  try{
+    const a=JSON.parse(localStorage.getItem("jp_predict")||"[]");
+    const b=JSON.parse(localStorage.getItem("jp_review")||"[]");
+    return a.length+b.length;
+  }catch(e){ return 0; }
+}
+async function importLocal(){
+  if(!session){ alert("请先登录"); return; }
+  let a=[],b=[];
+  try{ a=JSON.parse(localStorage.getItem("jp_predict")||"[]"); }catch(e){}
+  try{ b=JSON.parse(localStorage.getItem("jp_review")||"[]"); }catch(e){}
+  if(!a.length&&!b.length){ alert("本机没有旧记录"); return; }
+  const owner_name=(session.user&&session.user.name)||null;
+  const rows=[...a.map(x=>({kind:"predict",payload:x,owner_name})),...b.map(x=>({kind:"review",payload:x,owner_name}))];
+  const r=await cloud.database.from("jp_records").insert(rows).select();
+  if(r.error){ alert("迁移失败："+r.error.message); return; }
+  alert("已迁移 "+(r.data?r.data.length:0)+" 条到云端");
+  await loadData(); (window.JPAI&&JPAI.render()); renderReview();
+}
+
+/* ================= 公开区渲染 ================= */
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  t.classList.add("active"); $(t.dataset.p).classList.add("active");
+  window.scrollTo(0,0);
+  if(t.classList.contains("lock") && !session){ renderPersonal(); }
+});
+$("rounds").innerHTML=ROUNDS.map((r,i)=>`<div class="card">
+  <h3 style="margin-top:0">${i+1}. ${esc(r.t)}</h3>
+  <p><b>考察：</b>${esc(r.focus)}</p><p><b>常见陷阱：</b>${esc(r.trap)}</p><p><b>准备动作：</b>${esc(r.prep)}</p></div>`).join("");
+$("eng15").innerHTML=`<div class="card">`+ENG15.map((x,i)=>`
+  <div class="qitem"><p class="q">${i+1}. ${esc(x.q)}</p>
+  <p class="k"><b>结构：</b>${esc(x.frame)}</p>
+  <p class="en small"><b>起句：</b>${esc(x.key)}</p></div>`).join("")+`</div>`;
+
+boot();
+</script>
+<script src="q1.js"></script>
+<script src="q2.js"></script>
+<script src="q3.js"></script>
+<script src="q4.js"></script>
+<script src="q5.js"></script>
+<script src="q6.js"></script>
+<script src="q7.js"></script>
+<script src="q8.js"></script>
+<script src="q9.js"></script>
+<script src="q10.js"></script>
+<script src="q11.js"></script>
+<script src="q12.js"></script>
+<script src="q13.js"></script>
+<script src="engine.js"></script>
+<script src="revise.js"></script>
+<script src="predict.js"></script>
+</body>
+</html>
